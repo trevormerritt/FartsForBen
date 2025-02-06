@@ -2,19 +2,19 @@ package dev.geekback.fartsforben
 
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -71,17 +71,23 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                         .padding(innerPadding)) {
-                        Text("There are " + farts.size + " farts");
+                      //   Text("There are " + farts.size + " farts");
 
-                        FlowRow(modifier = Modifier.padding(8.dp)) {
+                        FlowRow(
+                            horizontalArrangement = Arrangement.Center,
+                            verticalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(8.dp)) {
                             farts.forEach {
-                                TextButton({
+                                ElevatedButton (
+                                    onClick = {
                                     println("Down");
                                     MediaPlayer.create(applicationContext, it).start();
                                 }) {
-                                    Text("Fart " + resources.getResourceEntryName(it));
+                                    // cleanup the name of the file before we present it to the user...
+                                    val fartLabel = resources.getResourceEntryName(it).replace('_', ' ');
+                                    // ...then present it.
+                                    Text(fartLabel);
                                 } //  val b = Button(applicationContext);
-
                             }
                         }
                     }
